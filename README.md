@@ -1,0 +1,1 @@
+<img src="src/main/resources/lk/ijse/multiclientauctionsystem/asset/img.png">
