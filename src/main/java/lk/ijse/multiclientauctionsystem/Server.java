@@ -19,6 +19,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 clients.add(socket);
 
+                // tread start and handleClient call method pass socket
                 new Thread(() -> handleClient(socket)).start();
             }
 
@@ -36,6 +37,7 @@ public class Server {
 
             String message;
             while (true) {
+                // message read and broadcast method call
                 message = in.readUTF();
                 broadcast(clientName + ": " + message, socket);
             }
@@ -47,12 +49,13 @@ public class Server {
         }
     }
 
-    private static void broadcast(String message, Socket sender) {
+    public static void broadcast(String message, Socket sender) {
         System.out.println(message);
 
         List<Socket> toRemove = new ArrayList<>();
 
         for (Socket client : clients) {
+            // check the client notequal sender and client connected to the server
             if (client != sender && client.isConnected()) {
                 try {
                     DataOutputStream out = new DataOutputStream(client.getOutputStream());
@@ -70,10 +73,12 @@ public class Server {
     }
 
     private static void removeClient(Socket socket) {
+        // disconnect the client in server
         clients.remove(socket);
         System.out.println("Client disconnected...");
         try {
             socket.close();
+            System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
