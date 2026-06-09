@@ -7,10 +7,11 @@ import java.util.*;
 public class Server {
     private static List<Socket> clients = new ArrayList<>();
     private static final int PORT = 6000;
+    private static int currentHighestBid = 5000;
 
     public static void main(String[] args) {
         System.out.println("[Auction Server Started - Port 6000]");
-        System.out.println("[Item: Vintage Watch | Starting Price: LKR 5,000]");
+        System.out.println("[Item: Vintage Watch | Starting Price: LKR "+currentHighestBid+"]");
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
 
