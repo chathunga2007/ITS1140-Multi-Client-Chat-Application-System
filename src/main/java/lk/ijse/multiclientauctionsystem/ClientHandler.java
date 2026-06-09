@@ -45,6 +45,7 @@ public class ClientHandler implements Initializable {
     }
 
     private void askForName() {
+        // client name fill dialog box
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Welcome Client Auction System");
         dialog.setHeaderText("Enter Your Name");
@@ -62,14 +63,17 @@ public class ClientHandler implements Initializable {
     private void connectToServer() {
         new Thread(() -> {
             try {
+                // new socket create
                 socket = new Socket("127.0.0.1", 6000);
                 in = new DataInputStream(socket.getInputStream());
                 out = new DataOutputStream(socket.getOutputStream());
 
+                // output stream add client name
                 out.writeUTF(clientName);
                 out.flush();
 
                 Platform.runLater(() -> {
+                    // client connect to the server show messag text area
                     txtArea.appendText("Connected " +"\n");
                 });
 
@@ -81,6 +85,7 @@ public class ClientHandler implements Initializable {
                 }
 
             } catch (IOException e) {
+                // server error
                 Platform.runLater(() -> {
                     txtArea.appendText("Server connection failed! Make sure server is running.\n");
                 });
@@ -90,6 +95,7 @@ public class ClientHandler implements Initializable {
 
     @FXML
     private void btnPlaceBidAction() throws IOException {
+        // check the text filed input
         if (out == null || txtField.getText().trim().isEmpty()) {
             return;
         }
@@ -99,6 +105,7 @@ public class ClientHandler implements Initializable {
         out.flush();
 
         Platform.runLater(() -> {
+            // show the text area input message
             txtArea.appendText("Me: " + message + "\n");
         });
 
@@ -108,5 +115,7 @@ public class ClientHandler implements Initializable {
     @FXML
     private void btnDisconnectOnAction() throws IOException {
         System.out.println("Client disconnected.");
+        socket.close();
+        System.exit(0);
     }
 }
