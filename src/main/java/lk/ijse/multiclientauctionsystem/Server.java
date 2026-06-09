@@ -43,7 +43,7 @@ public class Server {
             }
 
         } catch (IOException e) {
-            System.out.println(clientName + " disconnected.");
+            System.out.println(clientName + " disconnected...");
         } finally {
             removeClient(socket);
         }
@@ -78,7 +78,6 @@ public class Server {
         System.out.println("Client disconnected...");
         try {
             socket.close();
-            System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
